@@ -30,24 +30,24 @@ const rumahController = {
 
   getAll: async (req, res) => {
     try {
-      const rumahs = await Keluarga.find().populate("rumah");
-
-      const modifiedRumahs = rumahs.map((rumah) => ({
-        kepalaKeluarga: rumah.kepalaKeluarga ? rumah.kepalaKeluarga: null,
-        _id: rumah.rumah._id,
-        keaktifanShalat: rumah.rumah.keaktifanShalat,
-        informasiHaji: rumah.rumah.nformasiHaji,
-        kondisiZakat: rumah.rumah.kondisiZakat,
-        kemampuanBacaQuran: rumah.rumah.kemampuanBacaQuran,
-        kurban: rumah.rumah.kurban,
-        lat: rumah.rumah.lat,
-        lng: rumah.rumah.lng,
-        
+      const keluargas = await Keluarga.find().populate("rumah");
+  
+      const modifiedKeluargas = keluargas.map((keluarga) => ({
+        rumahId: keluarga.rumah._id,
+        keluargaId: keluarga._id,
+        kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
+        keaktifanShalat: keluarga.rumah.keaktifanShalat,
+        informasiHaji: keluarga.rumah.informasiHaji,
+        kondisiZakat: keluarga.rumah.kondisiZakat,
+        kemampuanBacaQuran: keluarga.rumah.kemampuanBacaQuran,
+        kurban: keluarga.rumah.kurban,
+        lat: keluarga.rumah.lat,
+        lng: keluarga.rumah.lng,
       }));
-
+  
       res.status(200).json({
-        message: "Rumahs fetched successfully",
-        rumahs: modifiedRumahs,
+        message: "Keluargas fetched successfully",
+        keluargas: modifiedKeluargas,
       });
     } catch (error) {
       console.error(error);
@@ -56,25 +56,39 @@ const rumahController = {
   },
   
   
+  
 
   getById: async (req, res) => {
     try {
-      const rumah = await Rumah.findById(req.params.id);
-
-      if (!rumah) {
-        res.status(404).json({ message: 'Rumah not found' });
+      const keluarga = await Keluarga.findById(req.params.id).populate("rumah");
+  
+      if (!keluarga) {
+        res.status(404).json({ message: "Keluarga not found" });
         return;
       }
-
+  
+      const modifiedKeluarga = {
+        kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
+        _id: keluarga.rumah._id,
+        keaktifanShalat: keluarga.rumah.keaktifanShalat,
+        informasiHaji: keluarga.rumah.informasiHaji,
+        kondisiZakat: keluarga.rumah.kondisiZakat,
+        kemampuanBacaQuran: keluarga.rumah.kemampuanBacaQuran,
+        kurban: keluarga.rumah.kurban,
+        lat: keluarga.rumah.lat,
+        lng: keluarga.rumah.lng,
+      };
+  
       res.status(200).json({
-        message: 'Rumah fetched successfully',
-        rumah: rumah,
+        message: "Keluarga fetched successfully",
+        keluarga: modifiedKeluarga,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Rumah not found' });
+      res.status(500).json({ message: "Keluarga not found" });
     }
   },
+  
 
   update: async (req, res) => {
     try {
