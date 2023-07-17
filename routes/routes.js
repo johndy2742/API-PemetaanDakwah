@@ -27,4 +27,15 @@ router.get("/api/rumah/:id", passport.authenticate("jwt", { session: false }), r
 router.put("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.update)
 router.delete("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.delete)
 
+
+//Non Token Get
+router.get("/api/admin/user",userController.getAll)
+router.get("/api/admin/user/:id",userController.getById)
+router.get("/api/admin/keluarga",keluargaController.getAll)
+router.get("/api/admin/keluarga/:id",keluargaController.getById)
+router.get("/api/admin/rumah",rumahController.getAll)
+router.get("/api/admin/rumah/:id",rumahController.getById)
+
+
+
 module.exports = router
