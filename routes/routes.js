@@ -4,6 +4,9 @@ const router = express.Router()
 const passport = require('passport');
 const keluargaController = require('../controller/keluarga.controller');
 const rumahController = require('../controller/rumah.controller');
+const petaDakwahController = require('../controller/petaDakwah.controller');
+
+// user route
 
 // user route
 router.post("/api/login", userController.login)
@@ -26,6 +29,13 @@ router.get("/api/rumah", passport.authenticate("jwt", { session: false }), rumah
 router.get("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.getById)
 router.put("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.update)
 router.delete("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.delete)
+
+// petaDakwah route
+router.post("/api/petaDakwah/create", passport.authenticate("jwt", { session: false }), petaDakwahController.create);
+router.get("/api/petaDakwah", passport.authenticate("jwt", { session: false }), petaDakwahController.getAll);
+router.get("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.getById);
+router.put("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.update);
+router.delete("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.delete);
 
 
 //Non Token Get
