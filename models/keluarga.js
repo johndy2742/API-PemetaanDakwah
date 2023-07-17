@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
 
 const keluargaSchema = new mongoose.Schema({
   rumah: {
@@ -45,6 +44,10 @@ const keluargaSchema = new mongoose.Schema({
       },
     },
   ],
+  fotoRumah: {
+    type: String,
+    required: true,
+  },
 });
 
 const Keluarga = mongoose.model('Keluarga', keluargaSchema);
