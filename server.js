@@ -1,6 +1,7 @@
 const config = require('./config/config');
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const mongoose = require('mongoose');
 const router = require('./routes/routes');
 const passport = require('passport');
@@ -19,7 +20,7 @@ db.once('open', () => console.log('Connected to database'));
 
 app.use(passport.initialize());
 passport.use(passportMiddleware);
-
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 app.use(router);
 
