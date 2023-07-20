@@ -33,6 +33,7 @@ const rumahController = {
       const keluargas = await Keluarga.find().populate("rumah");
   
       const modifiedKeluargas = keluargas.map((keluarga) => ({
+        fotoRumah: keluarga.fotoRumah,
         rumahId: keluarga.rumah._id,
         keluargaId: keluarga._id,
         kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
