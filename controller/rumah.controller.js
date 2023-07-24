@@ -90,7 +90,98 @@ const rumahController = {
     }
   },
   
+  getByZakat: async (req, res, status) => {
+    try {
+      const keluargas = await Keluarga.find().populate("rumah");
+  
+      const modifiedKeluargas = keluargas.map((keluarga) => ({
+        fotoRumah: keluarga.fotoRumah,
+        rumahId: keluarga.rumah._id,
+        keluargaId: keluarga._id,
+        kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
+        keaktifanShalat: keluarga.rumah.keaktifanShalat,
+        informasiHaji: keluarga.rumah.informasiHaji,
+        kondisiZakat: keluarga.rumah.kondisiZakat,
+        kemampuanBacaQuran: keluarga.rumah.kemampuanBacaQuran,
+        kurban: keluarga.rumah.kurban,
+        lat: keluarga.rumah.lat,
+        lng: keluarga.rumah.lng,
+      }));
+      const keluargaWithKondisizakat = modifiedKeluargas.filter((keluargaObj) => {
+        return keluargaObj.kondisiZakat === status;
+      });
+      console.log(keluargaWithKondisizakat)
+      res.status(200).json({
+        message: "Keluarga fetched successfully",
+        keluarga: keluargaWithKondisizakat,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Keluarga not found" });
+    }
+  },
 
+  getByHaji: async (req, res, status) => {
+    try {
+      const keluargas = await Keluarga.find().populate("rumah");
+  
+      const modifiedKeluargas = keluargas.map((keluarga) => ({
+        fotoRumah: keluarga.fotoRumah,
+        rumahId: keluarga.rumah._id,
+        keluargaId: keluarga._id,
+        kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
+        keaktifanShalat: keluarga.rumah.keaktifanShalat,
+        informasiHaji: keluarga.rumah.informasiHaji,
+        kondisiZakat: keluarga.rumah.kondisiZakat,
+        kemampuanBacaQuran: keluarga.rumah.kemampuanBacaQuran,
+        kurban: keluarga.rumah.kurban,
+        lat: keluarga.rumah.lat,
+        lng: keluarga.rumah.lng,
+      }));
+      const keluargaWithKondisihaji = modifiedKeluargas.filter((keluargaObj) => {
+        return keluargaObj.informasiHaji === status;
+      });
+      console.log(keluargaWithKondisihaji)
+      res.status(200).json({
+        message: "Keluarga fetched successfully",
+        keluarga: keluargaWithKondisihaji,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Keluarga not found" });
+    }
+  },
+
+  getByKurban: async (req, res, status) => {
+    try {
+      const keluargas = await Keluarga.find().populate("rumah");
+  
+      const modifiedKeluargas = keluargas.map((keluarga) => ({
+        fotoRumah: keluarga.fotoRumah,
+        rumahId: keluarga.rumah._id,
+        keluargaId: keluarga._id,
+        kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
+        keaktifanShalat: keluarga.rumah.keaktifanShalat,
+        informasiHaji: keluarga.rumah.informasiHaji,
+        kondisiZakat: keluarga.rumah.kondisiZakat,
+        kemampuanBacaQuran: keluarga.rumah.kemampuanBacaQuran,
+        kurban: keluarga.rumah.kurban,
+        lat: keluarga.rumah.lat,
+        lng: keluarga.rumah.lng,
+      }));
+      const keluargaWithKondisikurban = modifiedKeluargas.filter((keluargaObj) => {
+        return keluargaObj.kurban === status;
+      });
+      console.log(keluargaWithKondisikurban)
+      res.status(200).json({
+        message: "Keluarga fetched successfully",
+        keluarga: keluargaWithKondisikurban,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Keluarga not found" });
+    }
+  },
   update: async (req, res) => {
     try {
       const rumah = await Rumah.findById(req.params.id);
