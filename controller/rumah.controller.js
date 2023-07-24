@@ -57,14 +57,12 @@ const rumahController = {
   },
   
   
-  
-
   getById: async (req, res) => {
     try {
-      const keluarga = await Keluarga.findById(req.params.id).populate("rumah");
+      const keluarga = await Keluarga.findOne({ rumah: req.params.id }).populate("rumah");
   
       if (!keluarga) {
-        res.status(404).json({ message: "Keluarga not found" });
+        res.status(404).json({ message: "Keluarga not found for the given Rumah ID" });
         return;
       }
   
@@ -86,7 +84,7 @@ const rumahController = {
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Keluarga not found" });
+      res.status(500).json({ message: "Error fetching Keluarga" });
     }
   },
   
