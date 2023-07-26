@@ -217,7 +217,7 @@ const rumahController = {
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Rumah not found' });
+      res.status(500).json({ message: 'Rumah failed to update' });
     }
   },
   
@@ -245,7 +245,7 @@ const rumahController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({
-        message: 'Rumah not found',
+        message: 'Rumah failed to delete',
       });
     }
   },

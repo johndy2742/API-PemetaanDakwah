@@ -85,7 +85,7 @@ const petaDakwahController = {
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Peta Dakwah Not found" });
+      res.status(500).json({ message: "Peta failed to update" });
     }
   },
 
@@ -101,9 +101,43 @@ const petaDakwahController = {
       res.status(200).json({ message: "Peta Dakwah deleted successfully" });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Peta Dakwah not found" });
+      res.status(500).json({ message: "Peta Dakwah failed to delete" });
     }
   },
+
+  getPetaDakwahByDate : async (req, res) => {
+    try {
+      const { startDate, endDate } = req.query;
+  
+      // Check if startDate and endDate are provided
+      if (!startDate || !endDate) {
+        return res.status(400).json({ message: "Both startDate and endDate are required" });
+      }
+  
+      // Convert the date strings to actual Date objects
+      const startDateObj = new Date(startDate);
+      const endDateObj = new Date(endDate);
+  
+      // Check if the date conversion is successful
+      if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+        return res.status(400).json({ message: "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)" });
+      }
+  
+      // Perform the query to filter PetaDakwah data based on the date range
+      const petaDakwahData = await PetaDakwah.find({
+        waktuMulai: { $gte: startDateObj, $lte: endDateObj },
+      });
+  
+      res.status(200).json({
+        message: "PetaDakwah data filtered successfully",
+        petaDakwah: petaDakwahData,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to filter PetaDakwah data" });
+    }
+  }
+  
 };
 
 module.exports = petaDakwahController;
