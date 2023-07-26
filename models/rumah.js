@@ -8,7 +8,7 @@ const rumahSchema = new mongoose.Schema({
   },
   keaktifanShalat: {
     type: String,
-    enum: ["Jarang", "Kadang-kadang", "Sering"],
+    enum: ["jarang", "kadang-kadang", "sering"],
     required: true,
   },
   informasiHaji: {
@@ -21,7 +21,7 @@ const rumahSchema = new mongoose.Schema({
   },
   kemampuanBacaQuran: {
     type: String,
-    enum: ["Tidak Bisa", "Terbata-bata", "Fasih"],
+    enum: ["tidak Bisa", "terbata-bata", "fasih"],
     required: true,
   },
   kurban: {
