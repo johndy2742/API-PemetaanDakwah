@@ -80,7 +80,7 @@ const rumahController = {
   
       res.status(200).json({
         message: "Keluarga fetched successfully",
-        keluarga: modifiedKeluarga,
+        keluargas: modifiedKeluarga,
       });
     } catch (error) {
       console.error(error);
@@ -110,7 +110,7 @@ const rumahController = {
       });
       res.status(200).json({
         message: "Keluarga fetched successfully",
-        keluarga: keluargaWithKondisizakat,
+        keluargas: keluargaWithKondisizakat,
       });
     } catch (error) {
       console.error(error);
