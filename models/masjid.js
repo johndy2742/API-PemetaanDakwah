@@ -1,22 +1,34 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const masjidSchema = new mongoose.Schema({
-  name: {
+  namaMasjid: {
     type: String,
-    required: true
+    required: true,
   },
-  location: {
+  ketuaDKM: {
+    type: String,
+    required: true,
+  },
+  tahunBerdiri: {
+    type: Number,
+    required: true,
+  },
+  jumlahJamaah: {
+    type: Number,
+    required: true,
+  },
+  lokasiMasjid: {
     lat: {
       type: String,
-      required: true
+      required: true,
     },
     lng: {
       type: String,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 });
 
-const Masjid = mongoose.model('masjid', masjidSchema);
+const Masjid = mongoose.model("Masjid", masjidSchema);
 
 module.exports = Masjid;
