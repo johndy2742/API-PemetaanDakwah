@@ -5,6 +5,7 @@ const passport = require('passport');
 const keluargaController = require('../controller/keluarga.controller');
 const rumahController = require('../controller/rumah.controller');
 const petaDakwahController = require('../controller/petaDakwah.controller');
+const masjidController = require('../controller/masjid.controller');
 
 // user route
 
@@ -67,6 +68,12 @@ router.get("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false 
 router.put("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.update);
 router.delete("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.delete);
 
+// masjid route
+router.post("/api/masjid/create", passport.authenticate("jwt", { session: false }), masjidController.create);
+router.get("/api/masjid", passport.authenticate("jwt", { session: false }), masjidController.getAll);
+router.get("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.getById);
+router.put("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.update);
+router.delete("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.delete);
 
 //Non Token Get
 router.get("/api/admin/user",userController.getAll)
