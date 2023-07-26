@@ -59,20 +59,20 @@ const keluargaController = {
     try {
       // Find the Rumah model based on the provided rumahId
       const rumah = await Rumah.findById(req.params.id);
-
+  
       if (!rumah) {
         res.status(404).json({ message: "Rumah not found" });
         return;
       }
-
+  
       // Find the Keluarga associated with the found Rumah
-      const keluarga = await Keluarga.find({ rumah: req.params.id});
-
+      const keluarga = await Keluarga.findOne({ rumah: req.params.id });
+  
       if (!keluarga) {
         res.status(404).json({ message: "Keluarga not found for the given Rumah ID" });
         return;
       }
-
+  
       res.status(200).json({
         message: "Keluarga fetched successfully",
         keluarga: keluarga,
@@ -82,20 +82,21 @@ const keluargaController = {
       res.status(500).json({ message: "Error fetching Keluarga" });
     }
   },
+  
 
   update: async (req, res) => {
     try {
       // Find the Rumah model based on the provided rumahId
       const rumah = await Rumah.findById(req.params.id);
-
+  
       if (!rumah) {
         res.status(404).json({ message: "Rumah not found" });
         return;
       }
-
+  
       // Find the Keluarga associated with the found Rumah
-      const keluarga = await Keluarga.find({ rumah: req.params.id});
-
+      const keluarga = await Keluarga.findOne({ rumah: req.params.id });
+  
       if (!keluarga) {
         res.status(404).json({ message: "Keluarga not found for the given Rumah ID" });
         return;
@@ -125,31 +126,35 @@ const keluargaController = {
   },
   
   
+  
 
   delete: async (req, res) => {
     try {
       // Find the Rumah model based on the provided rumahId
       const rumah = await Rumah.findById(req.params.id);
-
+  
       if (!rumah) {
         res.status(404).json({ message: "Rumah not found" });
         return;
       }
-
-      // Find the Keluarga associated with the found Rumah
-      const keluarga = await Keluarga.find({ rumah: req.params.id});
-
+  
+      // Find and delete the Keluarga associated with the found Rumah
+      const keluarga = await Keluarga.findOneAndDelete({ rumah: req.params.id });
+  
       if (!keluarga) {
         res.status(404).json({ message: "Keluarga not found for the given Rumah ID" });
         return;
       }
-
-      res.status(200).json({ message: "Keluarga deleted successfully" });
+  
+      res.status(200).json({
+        message: "Keluarga deleted successfully",
+        keluarga: keluarga,
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Keluarga not found" });
+      res.status(500).json({ message: "Internal server error" });
     }
-  },
+  },  
 };
 
 module.exports = keluargaController;

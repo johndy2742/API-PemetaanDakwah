@@ -30,8 +30,13 @@ const rumahController = {
 
   getAll: async (req, res) => {
     try {
+      // Find all Rumahs with specific fields using lean()
+      const rumahs = await Rumah.find({}, "keaktifanShalat informasiHaji kondisiZakat kemampuanBacaQuran kurban lat lng").lean();
+  
+      // Find all Keluargas with populated Rumah
       const keluargas = await Keluarga.find().populate("rumah");
   
+      // Modify Keluargas as before
       const modifiedKeluargas = keluargas.map((keluarga) => ({
         fotoRumah: keluarga.fotoRumah,
         rumahId: keluarga.rumah._id,
@@ -49,12 +54,14 @@ const rumahController = {
       res.status(200).json({
         message: "Keluargas fetched successfully",
         keluargas: modifiedKeluargas,
+        rumahs: rumahs, // Add the Rumahs array to the response
       });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
   },
+  
   
   
   getById: async (req, res) => {

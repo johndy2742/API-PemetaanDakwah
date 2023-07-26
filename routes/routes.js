@@ -58,6 +58,8 @@ router.get("/api/rumah/kurban/false", passport.authenticate("jwt", { session: fa
         const status = false;
         await rumahController.getByKurban(req, res, status); 
     })
+
+    
 // petaDakwah route
 router.post("/api/petaDakwah/create", passport.authenticate("jwt", { session: false }), petaDakwahController.create);
 router.get("/api/petaDakwah", passport.authenticate("jwt", { session: false }), petaDakwahController.getAll);
