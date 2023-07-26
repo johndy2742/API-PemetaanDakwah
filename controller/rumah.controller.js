@@ -108,7 +108,6 @@ const rumahController = {
       const keluargaWithKondisizakat = modifiedKeluargas.filter((keluargaObj) => {
         return keluargaObj.kondisiZakat === status;
       });
-      console.log(keluargaWithKondisizakat)
       res.status(200).json({
         message: "Keluarga fetched successfully",
         keluarga: keluargaWithKondisizakat,
@@ -139,7 +138,6 @@ const rumahController = {
       const keluargaWithKondisihaji = modifiedKeluargas.filter((keluargaObj) => {
         return keluargaObj.informasiHaji === status;
       });
-      console.log(keluargaWithKondisihaji)
       res.status(200).json({
         message: "Keluarga fetched successfully",
         keluarga: keluargaWithKondisihaji,
@@ -170,7 +168,6 @@ const rumahController = {
       const keluargaWithKondisikurban = modifiedKeluargas.filter((keluargaObj) => {
         return keluargaObj.kurban === status;
       });
-      console.log(keluargaWithKondisikurban)
       res.status(200).json({
         message: "Keluarga fetched successfully",
         keluarga: keluargaWithKondisikurban,
