@@ -183,21 +183,34 @@ const rumahController = {
   update: async (req, res) => {
     try {
       const rumah = await Rumah.findById(req.params.id);
-
+  
       if (!rumah) {
         return res.status(404).json({ message: 'Rumah not found' });
       }
-
-      rumah.keaktifanShalat = req.body.keaktifanShalat;
-      rumah.informasiHaji = req.body.informasiHaji;
-      rumah.kondisiZakat = req.body.kondisiZakat;
-      rumah.kemampuanBacaQuran = req.body.kemampuanBacaQuran;
-      rumah.kurban = req.body.kurban;
-      rumah.lat = req.body.lat;
-      rumah.lng = req.body.lng;
-
+        if (req.body.keaktifanShalat !== undefined) {
+        rumah.keaktifanShalat = req.body.keaktifanShalat;
+      }
+      if (req.body.informasiHaji !== undefined) {
+        rumah.informasiHaji = req.body.informasiHaji;
+      }
+      if (req.body.kondisiZakat !== undefined) {
+        rumah.kondisiZakat = req.body.kondisiZakat;
+      }
+      if (req.body.kemampuanBacaQuran !== undefined) {
+        rumah.kemampuanBacaQuran = req.body.kemampuanBacaQuran;
+      }
+      if (req.body.kurban !== undefined) {
+        rumah.kurban = req.body.kurban;
+      }
+      if (req.body.lat !== undefined) {
+        rumah.lat = req.body.lat;
+      }
+      if (req.body.lng !== undefined) {
+        rumah.lng = req.body.lng;
+      }
+  
       await rumah.save();
-
+  
       res.status(200).json({
         message: 'Rumah updated successfully',
         rumah: rumah,
@@ -207,6 +220,7 @@ const rumahController = {
       res.status(500).json({ message: 'Rumah not found' });
     }
   },
+  
 
   delete: async (req, res) => {
     try {
