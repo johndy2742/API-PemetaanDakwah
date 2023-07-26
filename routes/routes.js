@@ -85,6 +85,35 @@ router.get("/api/admin/keluarga",keluargaController.getAll)
 router.get("/api/admin/keluarga/:id",keluargaController.getById)
 router.get("/api/admin/rumah",rumahController.getAll)
 router.get("/api/admin/rumah/:id",rumahController.getById)
+router.get("/api/rumah/zakat/true", async (req, res) => {
+  const status = true;
+  await rumahController.getByZakat(req, res, status); 
+})
+
+router.get("/api/rumah/zakat/false",async (req, res) => {
+      const status = false;
+      await rumahController.getByZakat(req, res, status); 
+  })
+
+router.get("/api/rumah/haji/true", async (req, res) => {
+  const status = true;
+  await rumahController.getByHaji(req, res, status); 
+})
+
+router.get("/api/rumah/haji/false",  async (req, res) => {
+      const status = false;
+      await rumahController.getByHaji(req, res, status); 
+  })  
+
+router.get("/api/rumah/kurban/true", async (req, res) => {
+  const status = true;
+  await rumahController.getByKurban(req, res, status); 
+})
+
+router.get("/api/rumah/kurban/false", async (req, res) => {
+      const status = false;
+      await rumahController.getByKurban(req, res, status); 
+  })
 
 
 
