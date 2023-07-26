@@ -1,4 +1,4 @@
-const Masjid = require("../models/Masjid");
+const Masjid = require("../models/masjid");
 
 const masjidController = {
   create: async (req, res) => {
