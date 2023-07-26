@@ -2,7 +2,7 @@ const PetaDakwah = require("../models/PetaDakwah");
 
 const petaDakwahController = {
   create: async (req, res) => {
-    const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir } = req.body;
+    const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori } = req.body;
 
     try {
       const newPetaDakwah = new PetaDakwah({
