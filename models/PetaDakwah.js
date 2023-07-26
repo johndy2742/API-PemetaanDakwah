@@ -25,6 +25,11 @@ const petaDakwahSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  kategori: {
+    type: String,
+    enum: ["Kehidupan", "Ibadah", "Keluarga", "Remaja", "Akhlak", "Toleransi", "Tauhid"],
+    required: true,
+  },
 });
 
 const PetaDakwah = mongoose.model("PetaDakwah", petaDakwahSchema);

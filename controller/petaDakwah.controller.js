@@ -12,6 +12,7 @@ const petaDakwahController = {
         lng,
         waktuMulai,
         waktuAkhir,
+        kategori,
       });
 
       const savedPetaDakwah = await newPetaDakwah.save();
@@ -68,7 +69,7 @@ const petaDakwahController = {
         return;
       }
 
-      const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir } = req.body;
+      const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori } = req.body;
 
       petaDakwah.pembicara = pembicara;
       petaDakwah.topikDakwah = topikDakwah;
@@ -76,6 +77,7 @@ const petaDakwahController = {
       petaDakwah.lng = lng;
       petaDakwah.waktuMulai = waktuMulai;
       petaDakwah.waktuAkhir = waktuAkhir;
+      petaDakwah.kategori = kategori;
 
       const updatedPetaDakwah = await petaDakwah.save();
 
@@ -127,6 +129,52 @@ const petaDakwahController = {
       const petaDakwahData = await PetaDakwah.find({
         waktuMulai: { $gte: startDateObj, $lte: endDateObj },
       });
+  
+      res.status(200).json({
+        message: "PetaDakwah data filtered successfully",
+        petaDakwah: petaDakwahData,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to filter PetaDakwah data" });
+    }
+  },
+
+  getPetaDakwahByKategori : async (req, res) => {
+    try {
+      const { kategori } = req.query;
+  
+      // Check if kategori is provided
+      if (!kategori) {
+        return res.status(400).json({ message: "Kategori parameter is required" });
+      }
+  
+      // Perform the query to filter PetaDakwah data based on the kategori
+      const petaDakwahData = await PetaDakwah.find({ kategori });
+  
+      res.status(200).json({
+        message: "PetaDakwah data filtered by kategori successfully",
+        petaDakwah: petaDakwahData,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to filter PetaDakwah data by kategori" });
+    }
+  },
+
+  getPetaDakwahByLocation : async (req, res) => {
+    try {
+      const { lat, lng } = req.query;
+  
+      if (!lat || !lng) {
+        return res.status(400).json({ message: "Both lat and lng are required" });
+      }
+  
+      const petaDakwahData = await PetaDakwah.find({ lat, lng });
+  
+      if (petaDakwahData.length === 0) {
+        return res.status(404).json({ message: "No PetaDakwah data found for the specified location" });
+      }
   
       res.status(200).json({
         message: "PetaDakwah data filtered successfully",

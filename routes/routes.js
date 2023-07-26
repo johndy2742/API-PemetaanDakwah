@@ -67,7 +67,9 @@ router.get("/api/petaDakwah", passport.authenticate("jwt", { session: false }), 
 router.get("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.getById);
 router.put("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.update);
 router.delete("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.delete);
-router.get("/api/petaDakwah/filter/filter", passport.authenticate("jwt", { session: false }), petaDakwahController.getPetaDakwahByDate);
+router.get("/api/petaDakwah/filter/date", passport.authenticate("jwt", { session: false }), petaDakwahController.getPetaDakwahByDate);
+router.get("/api/petaDakwah/filter/kategori", passport.authenticate("jwt", { session: false }), petaDakwahController.getPetaDakwahByKategori);
+router.get("/api/petaDakwah/filter/location", passport.authenticate("jwt", { session: false }), petaDakwahController.getPetaDakwahByLocation);
 
 // masjid route
 router.post("/api/masjid/create", passport.authenticate("jwt", { session: false }), masjidController.create);
