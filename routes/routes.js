@@ -34,13 +34,9 @@ router.delete("/api/rumah/:id", passport.authenticate("jwt", { session: false })
     
 // petaDakwah route
 router.post("/api/petaDakwah/create", passport.authenticate("jwt", { session: false }), petaDakwahController.create);
-router.get("/api/petaDakwah", petaDakwahController.getAll);
-router.get("/api/petaDakwah/:id", petaDakwahController.getById);
 router.put("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.update);
 router.delete("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.delete);
-router.get("/api/petaDakwah/filter/date",  petaDakwahController.getPetaDakwahByDate);
-router.get("/api/petaDakwah/filter/kategori", petaDakwahController.getPetaDakwahByKategori);
-router.get("/api/petaDakwah/filter/location", petaDakwahController.getPetaDakwahByLocation);
+
 
 // masjid route
 router.post("/api/masjid/create", passport.authenticate("jwt", { session: false }), masjidController.create);
@@ -85,6 +81,12 @@ router.get("/api/rumah/kurban/false", async (req, res) => {
       const status = false;
       await rumahController.getByKurban(req, res, status); 
   })
+
+router.get("/api/petaDakwah/filter/date",  petaDakwahController.getPetaDakwahByDate);
+router.get("/api/petaDakwah/filter/kategori", petaDakwahController.getPetaDakwahByKategori);
+router.get("/api/petaDakwah/filter/location", petaDakwahController.getPetaDakwahByLocation);
+router.get("/api/petaDakwah", petaDakwahController.getAll);
+router.get("/api/petaDakwah/:id", petaDakwahController.getById);
 
 
 
