@@ -68,7 +68,7 @@ const rumahController = {
   
       const modifiedKeluarga = {
         kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
-        _id: keluarga.rumah._id,
+        RumahId: keluarga.rumah._id,
         keaktifanShalat: keluarga.rumah.keaktifanShalat,
         informasiHaji: keluarga.rumah.informasiHaji,
         kondisiZakat: keluarga.rumah.kondisiZakat,
