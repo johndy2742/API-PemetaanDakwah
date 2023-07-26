@@ -10,11 +10,11 @@ const masjidSchema = new mongoose.Schema({
     required: true,
   },
   tahunBerdiri: {
-    type: Number,
+    type: String,
     required: true,
   },
   jumlahJamaah: {
-    type: Number,
+    type: String,
     required: true,
   },
   lokasiMasjid: {
