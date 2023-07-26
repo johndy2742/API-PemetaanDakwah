@@ -30,35 +30,6 @@ router.get("/api/rumah", passport.authenticate("jwt", { session: false }), rumah
 router.get("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.getById)
 router.put("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.update)
 router.delete("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.delete)
-router.get("/api/rumah/zakat/true", passport.authenticate("jwt", { session: false }), async (req, res) => {
-    const status = true;
-    await rumahController.getByZakat(req, res, status); 
-  })
-
-router.get("/api/rumah/zakat/false", passport.authenticate("jwt", { session: false }), async (req, res) => {
-        const status = false;
-        await rumahController.getByZakat(req, res, status); 
-    })
-
-router.get("/api/rumah/haji/true", passport.authenticate("jwt", { session: false }), async (req, res) => {
-    const status = true;
-    await rumahController.getByHaji(req, res, status); 
-  })
-
-router.get("/api/rumah/haji/false", passport.authenticate("jwt", { session: false }), async (req, res) => {
-        const status = false;
-        await rumahController.getByHaji(req, res, status); 
-    })  
-
-router.get("/api/rumah/kurban/true", passport.authenticate("jwt", { session: false }), async (req, res) => {
-    const status = true;
-    await rumahController.getByKurban(req, res, status); 
-  })
-
-router.get("/api/rumah/kurban/false", passport.authenticate("jwt", { session: false }), async (req, res) => {
-        const status = false;
-        await rumahController.getByKurban(req, res, status); 
-    })
 
     
 // petaDakwah route
