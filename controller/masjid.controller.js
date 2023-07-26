@@ -2,7 +2,7 @@ const Masjid = require("../models/masjid");
 
 const masjidController = {
   create: async (req, res) => {
-    const { namaMasjid, ketuaDKM, tahunBerdiri, jumlahJamaah, lat, lng } = req.body;
+    const { namaMasjid, ketuaDKM, tahunBerdiri, jumlahJamaah, lokasiMasjid } = req.body;
 
     try {
       const newMasjid = new Masjid({
@@ -10,7 +10,7 @@ const masjidController = {
         ketuaDKM,
         tahunBerdiri,
         jumlahJamaah,
-        lokasiMasjid: { lat, lng },
+        lokasiMasjid,
       });
 
       const savedMasjid = await newMasjid.save();
@@ -67,13 +67,13 @@ const masjidController = {
         return;
       }
 
-      const { namaMasjid, ketuaDKM, tahunBerdiri, jumlahJamaah, lat, lng } = req.body;
+      const { namaMasjid, ketuaDKM, tahunBerdiri, jumlahJamaah, lokasiMasjid } = req.body;
 
       masjid.namaMasjid = namaMasjid;
       masjid.ketuaDKM = ketuaDKM;
       masjid.tahunBerdiri = tahunBerdiri;
       masjid.jumlahJamaah = jumlahJamaah;
-      masjid.lokasiMasjid = { lat, lng };
+      masjid.lokasiMasjid = lokasiMasjid;
 
       const updatedMasjid = await masjid.save();
 
@@ -100,36 +100,6 @@ const masjidController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Failed to delete Masjid" });
-    }
-  },
-
-  getByLocation: async (req, res) => {
-    try {
-      const { lat, lng } = req.query;
-
-      // Check if lat and lng are provided
-      if (!lat || !lng) {
-        return res.status(400).json({ message: "Both latitude (lat) and longitude (lng) are required" });
-      }
-
-      // Perform the query to find Masjid data based on the lat and lng
-      const masjidData = await Masjid.find({
-        "lokasiMasjid.lat": lat,
-        "lokasiMasjid.lng": lng,
-      });
-
-      // Check if any Masjid data is found
-      if (masjidData.length === 0) {
-        return res.status(404).json({ message: "No Masjid found at the specified location" });
-      }
-
-      res.status(200).json({
-        message: "Masjid data fetched successfully",
-        masjids: masjidData,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Failed to fetch Masjid data" });
     }
   },
 };

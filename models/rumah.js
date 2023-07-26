@@ -21,7 +21,7 @@ const rumahSchema = new mongoose.Schema({
   },
   kemampuanBacaQuran: {
     type: String,
-    enum: ["tidak Bisa", "terbata-bata", "fasih"],
+    enum: ["tidak bisa", "terbata-bata", "fasih"],
     required: true,
   },
   kurban: {
