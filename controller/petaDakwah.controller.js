@@ -1,114 +1,156 @@
-const PetaDakwah = require("../models/PetaDakwah");
+const PetaDakwah = require('../models/petaDakwah');
 
 const petaDakwahController = {
+  // Create a new PetaDakwah document
   create: async (req, res) => {
-    const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori, foto } = req.body;
+    const {
+      masjidId,
+      pembicara,
+      topikDakwah,
+      kategori,
+      gelar_pembicara,
+      asal_instansi_pembicara,
+      foto,
+      waktuMulai,
+      waktuAkhir,
+      tipe_kegiatan,
+      nama_penyelenggara,
+      alamat_penyelenggara,
+      penanggung_jawab,
+      no_hp_penyelenggara,
+    } = req.body;
 
     try {
-      const newPetaDakwah = new PetaDakwah({
+      // Create the petaDakwah document
+      const petaDakwah = new PetaDakwah({
+        masjidId,
         pembicara,
         topikDakwah,
-        lat,
-        lng,
+        kategori,
+        gelar_pembicara,
+        asal_instansi_pembicara,
+        foto,
         waktuMulai,
         waktuAkhir,
-        kategori,
-        foto,
+        tipe_kegiatan,
+        nama_penyelenggara,
+        alamat_penyelenggara,
+        penanggung_jawab,
+        no_hp_penyelenggara,
       });
 
-      const savedPetaDakwah = await newPetaDakwah.save();
+      const newPetaDakwah = await petaDakwah.save();
 
       res.status(201).json({
-        message: "Peta Dakwah created successfully",
-        petaDakwah: savedPetaDakwah,
+        message: "PetaDakwah created successfully",
+        data: newPetaDakwah,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Failed to create Peta Dakwah" });
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 
+  // Get all PetaDakwah documents
   getAll: async (req, res) => {
     try {
-      const petaDakwahs = await PetaDakwah.find();
-
+      const petaDakwahs = await PetaDakwah.find().populate("masjidId");
       res.status(200).json({
-        message: "Peta Dakwahs fetched successfully",
-        petaDakwahs: petaDakwahs,
+        message: "PetaDakwahs fetched successfully",
+        petadakwah: petaDakwahs,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Peta Dakwah Not found" });
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 
+  // Get a specific PetaDakwah document by ID
   getById: async (req, res) => {
     try {
-      const petaDakwah = await PetaDakwah.findById(req.params.id);
-
+      const petaDakwah = await PetaDakwah.findById(req.params.id).populate("masjidId");
       if (!petaDakwah) {
-        res.status(404).json({ message: "Peta Dakwah not found" });
-        return;
+        return res.status(404).json({ message: "PetaDakwah not found" });
       }
-
       res.status(200).json({
-        message: "Peta Dakwah fetched successfully",
-        petaDakwah: petaDakwah,
+        message: "PetaDakwah fetched successfully",
+        petadakwah: petaDakwah,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Peta Dakwah Not found" });
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 
+  // Update a specific PetaDakwah document by ID
   update: async (req, res) => {
+    const {
+      pembicara,
+      topikDakwah,
+      kategori,
+      gelar_pembicara,
+      asal_instansi_pembicara,
+      foto,
+      waktuMulai,
+      waktuAkhir,
+      tipe_kegiatan,
+      nama_penyelenggara,
+      alamat_penyelenggara,
+      penanggung_jawab,
+      no_hp_penyelenggara,
+    } = req.body;
+
     try {
-      const petaDakwah = await PetaDakwah.findById(req.params.id);
+      const petaDakwah = await PetaDakwah.findByIdAndUpdate(
+        req.params.id,
+        {
+          pembicara,
+          topikDakwah,
+          kategori,
+          gelar_pembicara,
+          asal_instansi_pembicara,
+          foto,
+          waktuMulai,
+          waktuAkhir,
+          tipe_kegiatan,
+          nama_penyelenggara,
+          alamat_penyelenggara,
+          penanggung_jawab,
+          no_hp_penyelenggara,
+        },
+        { new: true }
+      );
 
       if (!petaDakwah) {
-        res.status(404).json({ message: "Peta Dakwah not found" });
-        return;
+        return res.status(404).json({ message: "PetaDakwah not found" });
       }
 
-      const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori, foto} = req.body;
-
-      petaDakwah.pembicara = pembicara;
-      petaDakwah.topikDakwah = topikDakwah;
-      petaDakwah.lat = lat;
-      petaDakwah.lng = lng;
-      petaDakwah.waktuMulai = waktuMulai;
-      petaDakwah.waktuAkhir = waktuAkhir;
-      petaDakwah.kategori = kategori;
-      petaDakwah.foto = foto;
-
-      const updatedPetaDakwah = await petaDakwah.save();
-
       res.status(200).json({
-        message: "Peta Dakwah updated successfully",
-        petaDakwah: updatedPetaDakwah,
+        message: "PetaDakwah updated successfully",
+        data: petaDakwah,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Peta failed to update" });
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 
+  // Delete a specific PetaDakwah document by ID
   delete: async (req, res) => {
     try {
       const petaDakwah = await PetaDakwah.findByIdAndDelete(req.params.id);
-
       if (!petaDakwah) {
-        res.status(404).json({ message: "Peta Dakwah not found" });
-        return;
+        return res.status(404).json({ message: "PetaDakwah not found" });
       }
-
-      res.status(200).json({ message: "Peta Dakwah deleted successfully" });
+      res.status(200).json({
+        message: "PetaDakwah deleted successfully",
+        data: petaDakwah,
+      });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Peta Dakwah failed to delete" });
+      res.status(500).json({ message: "Internal server error" });
     }
   },
-
   getPetaDakwahByDate : async (req, res) => {
     try {
       const { startDate, endDate } = req.query;
@@ -142,18 +184,24 @@ const petaDakwahController = {
     }
   },
 
-  getPetaDakwahByKategori : async (req, res) => {
+  getPetaDakwahByKategori: async (req, res) => {
     try {
       const { kategori } = req.query;
-  
+
       // Check if kategori is provided
       if (!kategori) {
         return res.status(400).json({ message: "Kategori parameter is required" });
       }
-  
+
+      // Check if the provided kategori is valid (from the enum list)
+      const validKategoriList = ["kehidupan", "ibadah", "keluarga", "remaja", "akhlak", "toleransi", "tauhid"];
+      if (!validKategoriList.includes(kategori)) {
+        return res.status(400).json({ message: "Not a valid kategori" });
+      }
+
       // Perform the query to filter PetaDakwah data based on the kategori
       const petaDakwahData = await PetaDakwah.find({ kategori });
-  
+
       res.status(200).json({
         message: "PetaDakwah data filtered by kategori successfully",
         petaDakwah: petaDakwahData,
@@ -187,7 +235,6 @@ const petaDakwahController = {
       res.status(500).json({ message: "Failed to filter PetaDakwah data" });
     }
   }
-  
 };
 
 module.exports = petaDakwahController;

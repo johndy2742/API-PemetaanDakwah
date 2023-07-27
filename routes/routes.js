@@ -9,8 +9,6 @@ const masjidController = require('../controller/masjid.controller');
 const uploadcontroller = require('../controller/upload.controller');
 
 // user route
-
-// user route
 router.post("/api/login", userController.login)
 router.get("/api/user",passport.authenticate("jwt", { session: false }) , userController.getAll)
 router.post("/api/user/create", passport.authenticate("jwt", { session: false }), userController.create)
