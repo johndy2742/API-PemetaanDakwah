@@ -26,7 +26,8 @@ const s3 = new AWS.S3({
   endpoint: `https://${region}.digitaloceanspaces.com`,
 });
 
-const uploadFolderPath = path.join(__dirname, 'uploads');
+const uploadFolderPath = 'uploads/';
+console.log(uploadFolderPath)
 if (!fs.existsSync(uploadFolderPath)) {
   fs.mkdirSync(uploadFolderPath);
 }
