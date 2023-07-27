@@ -1,4 +1,4 @@
-const PetaDakwah = require('../models/petaDakwah');
+const PetaDakwah = require('../models/PetaDakwah');
 
 const petaDakwahController = {
   // Create a new PetaDakwah document
