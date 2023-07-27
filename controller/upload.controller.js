@@ -1,27 +1,25 @@
 const multer = require('multer');
 const path = require('path');
 const AWS = require('aws-sdk');
+const config = require('../config/config');
 
-// Configure AWS SDK with your access credentials
-const accessKeyId = 'DO00EB7TWMX4FU3PG2X6'; // Replace with your actual access key
-const secretAccessKey = 'Evb+SKm7oFwsMvWwte2+VMeOoiecyKxdWNUxrAMUy1g'; // Replace with your actual secret key
-console.log('Access Key:', accessKeyId);
-console.log('Secret Key:', secretAccessKey);
+const accessKeyId = config.do_space_key;
+const secretAccessKey = config.do_secret_key;
 
-AWS.config.update({
-  accessKeyId: accessKeyId,
-  secretAccessKey: secretAccessKey,
-});
+if (!accessKeyId || !secretAccessKey) {
+  console.error('Please set the DO_SECRET_KEY and DO_SPACE_KEY environment variables.');
+  process.exit(1);
+}
 
-const spaceName = 'peta-dakwah-image'; // Replace with your actual Space name
-const region = 'sgp1'; // Replace with your actual region code
-
-// Create an S3 instance
+const spaceName = config.do_space_name; // Replace with your actual Space name
+const region = config.do_region; // Replace with your actual region code
+console.log(region);
 const s3 = new AWS.S3({
-  endpoint: `https://${region}.digitaloceanspaces.com`,
+  endpoint: `https://sgp1.digitaloceanspaces.com`,
 });
 
-// Multer configuration - specify the destination for storing uploaded images
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/');
@@ -34,33 +32,34 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage }).single('image');
 
-// Controller action for handling image upload
 function uploadImage(req, res) {
     upload(req, res, function (err) {
       if (err) {
         return res.status(500).json({ message: 'Error uploading image' });
       }
   
-      // Image was uploaded successfully, now upload it to DigitalOcean Spaces
+      AWS.config.update({
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+      });
+  
       const params = {
         Bucket: spaceName,
         Key: req.file.filename,
         Body: require('fs').createReadStream(req.file.path),
       };
   
-      // Log the params before uploading the image
       console.log('Uploading image with the following params:');
       console.log(params);
   
       s3.upload(params, function (err, data) {
         if (err) {
+          console.error('Error uploading image:', err);
           return res.status(500).json({ message: 'Error uploading image to DigitalOcean Spaces' });
         }
   
-        // Delete the temporary file created by multer
         require('fs').unlinkSync(req.file.path);
   
-        // Image uploaded to DigitalOcean Spaces successfully
         const imageUrl = data.Location;
         return res.json({ imageUrl: imageUrl });
       });
@@ -68,5 +67,8 @@ function uploadImage(req, res) {
   }
   
 
-// Export the controller action
-module.exports = { uploadImage };
+const uploadcontroller = {
+  uploadImage,
+};
+
+module.exports = uploadcontroller;

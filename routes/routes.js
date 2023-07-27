@@ -6,6 +6,7 @@ const keluargaController = require('../controller/keluarga.controller');
 const rumahController = require('../controller/rumah.controller');
 const petaDakwahController = require('../controller/petaDakwah.controller');
 const masjidController = require('../controller/masjid.controller');
+const uploadcontroller = require('../controller/upload.controller');
 
 // user route
 
@@ -88,6 +89,9 @@ router.get("/api/petaDakwah/filter/location", petaDakwahController.getPetaDakwah
 router.get("/api/petaDakwah", petaDakwahController.getAll);
 router.get("/api/petaDakwah/:id", petaDakwahController.getById);
 
+// Route for image upload
+router.post('/api/upload', uploadcontroller.uploadImage);
 
 
-module.exports = router
+
+module.exports = router;

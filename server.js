@@ -7,7 +7,6 @@ const router = require('./routes/routes');
 const passport = require('passport');
 const passportMiddleware = require('./middlewares/authenticators');
 
-
 mongoose.connect(config.database_url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
