@@ -2,6 +2,7 @@ const multer = require('multer');
 const path = require('path');
 const AWS = require('aws-sdk');
 const config = require('../config/config');
+const mime = require('mime');
 
 const accessKeyId = config.do_space_key;
 const secretAccessKey = config.do_secret_key;
@@ -46,6 +47,8 @@ function uploadImage(req, res) {
       Bucket: spaceName,
       Key: req.file.filename,
       Body: require('fs').createReadStream(req.file.path),
+      ACL: 'public-read',
+      ContentType: mime.getType(req.file.originalname),
     };
 
     console.log('Uploading image with the following params:');
@@ -55,10 +58,11 @@ function uploadImage(req, res) {
         console.error('Error uploading image:', err); // Log the complete error object
         return res.status(500).json({ message: 'Error uploading image to DigitalOcean Spaces' });
       }
-
+      
       require('fs').unlinkSync(req.file.path);
 
-      const imageUrl = data.Location;
+      const imageUrl = `https://${spaceName}.${region}.cdn.digitaloceanspaces.com/${req.file.filename}`;
+      res.set('Content-Disposition', 'inline');
       return res.json({ imageUrl: imageUrl });
     });
   });
