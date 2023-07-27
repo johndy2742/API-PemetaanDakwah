@@ -30,6 +30,10 @@ const masjidSchema = new mongoose.Schema({
   foto: {
     type: String,
     required: true,
+  },
+  alamat: {
+    type: String,
+    required: true,
   }
 });
 
