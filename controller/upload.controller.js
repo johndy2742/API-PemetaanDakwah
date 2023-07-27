@@ -1,3 +1,4 @@
+const fs = require('fs');
 const multer = require('multer');
 const path = require('path');
 const AWS = require('aws-sdk');
@@ -24,6 +25,12 @@ AWS.config.update({
 const s3 = new AWS.S3({
   endpoint: `https://${region}.digitaloceanspaces.com`,
 });
+
+const uploadFolderPath = 'uploads/';
+console.log(uploadFolderPath)
+if (!fs.existsSync(uploadFolderPath)) {
+  fs.mkdirSync(uploadFolderPath);
+}
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
