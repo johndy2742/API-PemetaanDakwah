@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Masjid = require("../models/Masjid");
+const Masjid = require("../models/masjid");
 
 const masjidController = {
   // Create a new Masjid
