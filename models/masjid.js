@@ -27,6 +27,10 @@ const masjidSchema = new mongoose.Schema({
       required: true,
     },
   },
+  foto: {
+    type: String,
+    required: true,
+  }
 });
 
 const Masjid = mongoose.model("Masjid", masjidSchema);

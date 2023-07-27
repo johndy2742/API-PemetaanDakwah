@@ -30,6 +30,10 @@ const petaDakwahSchema = new mongoose.Schema({
     enum: ["kehidupan", "ibadah", "keluarga", "remaja", "akhlak", "toleransi", "tauhid"],
     required: true,
   },
+  foto: {
+    type: String,
+    required: true,
+  }
 });
 
 const PetaDakwah = mongoose.model("PetaDakwah", petaDakwahSchema);
