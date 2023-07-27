@@ -212,29 +212,29 @@ const petaDakwahController = {
     }
   },
 
-  getPetaDakwahByLocation : async (req, res) => {
+  getPetaDakwahByLocation: async (req, res) => {
     try {
-      const { lat, lng } = req.query;
-  
-      if (!lat || !lng) {
-        return res.status(400).json({ message: "Both lat and lng are required" });
+      const { id } = req.query;
+
+      if (!id) {
+        return res.status(400).json({ message: "Masjid ID is required" });
       }
-  
-      const petaDakwahData = await PetaDakwah.find({ lat, lng });
-  
+
+      const petaDakwahData = await PetaDakwah.find({ _id: id });
+
       if (petaDakwahData.length === 0) {
-        return res.status(404).json({ message: "No PetaDakwah data found for the specified location" });
+        return res.status(404).json({ message: "No PetaDakwah data found for the specified masjid ID" });
       }
-  
+
       res.status(200).json({
-        message: "PetaDakwah data filtered successfully",
+        message: "PetaDakwah data fetched successfully by masjid ID",
         petaDakwah: petaDakwahData,
       });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: "Failed to filter PetaDakwah data" });
+      res.status(500).json({ message: "Failed to fetch PetaDakwah data by masjid ID" });
     }
-  }
+  },
 };
 
 module.exports = petaDakwahController;
