@@ -2,7 +2,7 @@ const PetaDakwah = require("../models/PetaDakwah");
 
 const petaDakwahController = {
   create: async (req, res) => {
-    const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori } = req.body;
+    const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori, foto } = req.body;
 
     try {
       const newPetaDakwah = new PetaDakwah({
@@ -13,6 +13,7 @@ const petaDakwahController = {
         waktuMulai,
         waktuAkhir,
         kategori,
+        foto,
       });
 
       const savedPetaDakwah = await newPetaDakwah.save();
@@ -69,7 +70,7 @@ const petaDakwahController = {
         return;
       }
 
-      const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori } = req.body;
+      const { pembicara, topikDakwah, lat, lng, waktuMulai, waktuAkhir, kategori, foto} = req.body;
 
       petaDakwah.pembicara = pembicara;
       petaDakwah.topikDakwah = topikDakwah;
@@ -78,6 +79,7 @@ const petaDakwahController = {
       petaDakwah.waktuMulai = waktuMulai;
       petaDakwah.waktuAkhir = waktuAkhir;
       petaDakwah.kategori = kategori;
+      petaDakwah.foto = foto;
 
       const updatedPetaDakwah = await petaDakwah.save();
 
