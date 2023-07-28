@@ -247,6 +247,20 @@ const petaDakwahController = {
       res.status(500).json({ message: "Failed to fetch PetaDakwah data by masjid ID" });
     }
   },
+  getAllWithoutMasjid: async (req, res) => {
+    try {
+      // Your logic to retrieve all PetaDakwah without a masjid association here
+      const petaDakwahData = await PetaDakwah.find({ masjidId: null });
+
+      res.status(200).json({
+        message: "PetaDakwah data without masjid association fetched successfully",
+        petaDakwah: petaDakwahData,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to fetch PetaDakwah data without masjid association" });
+    }
+  },
 };
 
 module.exports = petaDakwahController;

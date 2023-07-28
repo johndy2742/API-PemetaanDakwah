@@ -84,8 +84,10 @@ router.get("/api/rumah/kurban/false", async (req, res) => {
 router.get("/api/petaDakwah/filter/date",  petaDakwahController.getPetaDakwahByDate);
 router.get("/api/petaDakwah/filter/kategori", petaDakwahController.getPetaDakwahByKategori);
 router.get("/api/petaDakwah/filter/masjid", petaDakwahController.getPetaDakwahByMasjid);
+router.get("/api/petaDakwah/filter/withoutmasjid", petaDakwahController.getAllWithoutMasjid);
 router.get("/api/petaDakwah", petaDakwahController.getAll);
 router.get("/api/petaDakwah/:id", petaDakwahController.getById);
+
 
 // Route for image upload
 router.post('/api/upload', uploadcontroller.uploadImage);
