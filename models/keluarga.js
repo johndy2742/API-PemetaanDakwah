@@ -28,19 +28,19 @@ const keluargaSchema = new mongoose.Schema({
     {
       nama: {
         type: String,
-        required: true,
+        required: false,
       },
       peran: {
         type: String,
-        required: true,
+        required: false,
       },
       usia: {
         type: String,
-        required: true,
+        required: false,
       },
       pekerjaan: {
         type: String,
-        required: true,
+        required: false,
       },
     },
   ],
