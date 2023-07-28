@@ -13,25 +13,25 @@ const Rumah = require('../models/rumah');
 router.post("/api/login", userController.login)
 router.get("/api/user",passport.authenticate("jwt", { session: false }) , userController.getAll)
 router.post("/api/user/create", passport.authenticate("jwt", { session: false }), userController.create)
-router.get("/api/user/:id", passport.authenticate("jwt", { session: false }), userController.getById)
+router.get("/api/user/:id",  userController.getById)
 router.put("/api/user/:id", passport.authenticate("jwt", { session: false }), userController.update)
 router.delete("/api/user/:id", passport.authenticate("jwt", { session: false }), userController.delete)
 
 // keluarga route
 router.post("/api/keluarga/create", passport.authenticate("jwt", { session: false }), keluargaController.create)
-router.get("/api/keluarga", passport.authenticate("jwt", { session: false }), keluargaController.getAll)
-router.get("/api/keluarga/:id", passport.authenticate("jwt", { session: false }), keluargaController.getById)
+router.get("/api/keluarga",  keluargaController.getAll)
+router.get("/api/keluarga/:id",  keluargaController.getById)
 router.put("/api/keluarga/:id", passport.authenticate("jwt", { session: false }), keluargaController.update)
 router.delete("/api/keluarga/:id", passport.authenticate("jwt", { session: false }), keluargaController.delete)
 
 
 //rumah route
 router.post("/api/rumah/create", passport.authenticate("jwt", { session: false }), rumahController.create)
-router.get("/api/rumah", passport.authenticate("jwt", { session: false }), rumahController.getAll)
-router.get("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.getById)
+router.get("/api/rumah",  rumahController.getAll)
+router.get("/api/rumah/:id",  rumahController.getById)
 router.put("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.update)
 router.delete("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.delete)
-router.get("/api/graph/rumah", passport.authenticate("jwt", { session: false }), rumahController.count)
+router.get("/api/graph/rumah",  rumahController.count)
     
 // petaDakwah route
 router.post("/api/petaDakwah/create", passport.authenticate("jwt", { session: false }), petaDakwahController.create);
@@ -42,11 +42,11 @@ router.delete("/api/petaDakwah/:id", passport.authenticate("jwt", { session: fal
 
 // masjid route
 router.post("/api/masjid/create", passport.authenticate("jwt", { session: false }), masjidController.create);
-router.get("/api/masjid", passport.authenticate("jwt", { session: false }), masjidController.getAll);
-router.get("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.getById);
+router.get("/api/masjid",  masjidController.getAll);
+router.get("/api/masjid/:id",  masjidController.getById);
 router.put("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.update);
 router.delete("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.delete);
-router.get("/api/graph/masjid", passport.authenticate("jwt", { session: false }), masjidController.count);
+router.get("/api/graph/masjid",  masjidController.count);
 
 //Non Token Get
 router.get("/api/admin/user",userController.getAll)
