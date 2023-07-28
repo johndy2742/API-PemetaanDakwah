@@ -79,7 +79,7 @@ const petaDakwahController = {
       }
       res.status(200).json({
         message: "PetaDakwah fetched successfully",
-        petadakwah: petaDakwah,
+        petaDakwah: petaDakwah,
       });
     } catch (error) {
       console.error(error);
