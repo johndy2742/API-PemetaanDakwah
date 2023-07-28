@@ -19,7 +19,7 @@ db.once('open', () => console.log('Connected to database'));
 
 app.use(passport.initialize());
 passport.use(passportMiddleware);
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(router);
 
