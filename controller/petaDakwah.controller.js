@@ -254,7 +254,7 @@ const petaDakwahController = {
 
       res.status(200).json({
         message: "PetaDakwah data without masjid association fetched successfully",
-        petaDakwah: petaDakwahData,
+        petaDakwahs: petaDakwahData,
       });
     } catch (error) {
       console.error(error);

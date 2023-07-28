@@ -13,12 +13,16 @@ const masjidController = {
   },
 
   // Get all Masjids
-  async getAll(req, res) {
+  getAll: async (req, res) => {
     try {
-      const allMasjids = await Masjid.find();
-      res.status(200).json(allMasjids);
+      const masjids = await Masjid.find();
+      res.status(200).json({
+        message: "Masjids fetched successfully",
+        masjids: masjids,
+      });
     } catch (error) {
-      res.status(500).json({ error: "Failed to get Masjids." });
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 
