@@ -7,6 +7,7 @@ const rumahController = require('../controller/rumah.controller');
 const petaDakwahController = require('../controller/petaDakwah.controller');
 const masjidController = require('../controller/masjid.controller');
 const uploadcontroller = require('../controller/upload.controller');
+const Rumah = require('../models/rumah');
 
 // user route
 router.post("/api/login", userController.login)
@@ -23,18 +24,20 @@ router.get("/api/keluarga/:id", passport.authenticate("jwt", { session: false })
 router.put("/api/keluarga/:id", passport.authenticate("jwt", { session: false }), keluargaController.update)
 router.delete("/api/keluarga/:id", passport.authenticate("jwt", { session: false }), keluargaController.delete)
 
+
 //rumah route
 router.post("/api/rumah/create", passport.authenticate("jwt", { session: false }), rumahController.create)
 router.get("/api/rumah", passport.authenticate("jwt", { session: false }), rumahController.getAll)
 router.get("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.getById)
 router.put("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.update)
 router.delete("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.delete)
-
+router.get("/api/graph/rumah", passport.authenticate("jwt", { session: false }), rumahController.count)
     
 // petaDakwah route
 router.post("/api/petaDakwah/create", passport.authenticate("jwt", { session: false }), petaDakwahController.create);
 router.put("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.update);
 router.delete("/api/petaDakwah/:id", passport.authenticate("jwt", { session: false }), petaDakwahController.delete);
+
 
 
 // masjid route
@@ -88,6 +91,8 @@ router.get("/api/petaDakwah/filter/masjid", petaDakwahController.getPetaDakwahBy
 router.get("/api/petaDakwah/filter/withoutmasjid", petaDakwahController.getAllWithoutMasjid);
 router.get("/api/petaDakwah", petaDakwahController.getAll);
 router.get("/api/petaDakwah/:id", petaDakwahController.getById);
+router.get("/api/graph/petaDakwah", petaDakwahController.count);
+router.get("/api/graph/petaDakwah/count", petaDakwahController.countbymonth);
 
 
 

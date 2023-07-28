@@ -255,6 +255,18 @@ const rumahController = {
       });
     }
   },
+  count: async (req, res) => {
+    try {
+      const count = await Rumah.countDocuments();
+      res.status(200).json({
+        message: "Number of Rumahs fetched successfully",
+        count: count,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
 };  
 
 module.exports = rumahController;

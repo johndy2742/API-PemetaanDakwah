@@ -263,6 +263,44 @@ const petaDakwahController = {
       res.status(500).json({ message: "Failed to fetch PetaDakwah data without masjid association" });
     }
   },
+  count: async (req, res) => {
+    try {
+      const count = await PetaDakwah.countDocuments();
+      res.status(200).json({
+        message: "Number of Dakwah fetched successfully",
+        count: count,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
+
+  countbymonth: async (req, res) => {
+    try {
+      const { month } = req.query;
+
+      let filter = {};
+      if (month) {
+        // Assuming the date field in the PetaDakwah schema is called "waktuMulai"
+        filter = {
+          waktuMulai: {
+            $gte: new Date(`${month}-01T00:00:00.000Z`),
+            $lt: new Date(`${month}-01T00:00:00.000Z`).setMonth(new Date(`${month}-01T00:00:00.000Z`).getMonth() + 1),
+          },
+        };
+      }
+
+      const count = await PetaDakwah.countDocuments(filter);
+      res.status(200).json({
+        message: "Number of Dakwah fetched successfully",
+        count: count,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  },
 };
 
 module.exports = petaDakwahController;
