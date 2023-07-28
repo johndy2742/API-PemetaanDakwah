@@ -4,15 +4,15 @@ const petaDakwahSchema = new mongoose.Schema({
   masjidId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Masjid",
-    required: true,
+    required: false,
   },
   lat: {
     type: String,
-    required: true,
+    required: false,
   },
   lng: {
     type: String,
-    required: true,
+    required: false,
   },
   pembicara: {
     type: String,

@@ -36,6 +36,10 @@ const rumahSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  alamat: {
+    type: String,
+    required: true,
+  }
 });
 
 const Rumah = mongoose.model("Rumah", rumahSchema);
