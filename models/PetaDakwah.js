@@ -6,6 +6,14 @@ const petaDakwahSchema = new mongoose.Schema({
     ref: "Masjid",
     required: true,
   },
+  lat: {
+    type: String,
+    required: true,
+  },
+  lng: {
+    type: String,
+    required: true,
+  },
   pembicara: {
     type: String,
     required: true,

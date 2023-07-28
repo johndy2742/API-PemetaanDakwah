@@ -5,6 +5,8 @@ const petaDakwahController = {
   create: async (req, res) => {
     const {
       masjidId,
+      lat,
+      lng,
       pembicara,
       topikDakwah,
       kategori,
@@ -24,6 +26,8 @@ const petaDakwahController = {
       // Create the petaDakwah document
       const petaDakwah = new PetaDakwah({
         masjidId,
+        lat,
+        lng,
         pembicara,
         topikDakwah,
         kategori,
@@ -85,6 +89,8 @@ const petaDakwahController = {
   // Update a specific PetaDakwah document by ID
   update: async (req, res) => {
     const {
+      lat,
+      lng,
       pembicara,
       topikDakwah,
       kategori,
@@ -104,6 +110,8 @@ const petaDakwahController = {
       const petaDakwah = await PetaDakwah.findByIdAndUpdate(
         req.params.id,
         {
+          lat,
+          lng,
           pembicara,
           topikDakwah,
           kategori,
@@ -212,7 +220,7 @@ const petaDakwahController = {
     }
   },
 
-  getPetaDakwahByLocation: async (req, res) => {
+  getPetaDakwahByMasjid: async (req, res) => {
     try {
       const { id } = req.query;
 
