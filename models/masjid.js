@@ -17,16 +17,14 @@ const masjidSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lokasiMasjid: {
-    lat: {
+  lat: {
       type: String,
       required: true,
     },
-    lng: {
+  lng: {
       type: String,
       required: true,
     },
-  },
   foto: {
     type: String,
     required: true,

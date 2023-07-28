@@ -180,7 +180,7 @@ const petaDakwahController = {
       // Perform the query to filter PetaDakwah data based on the date range
       const petaDakwahData = await PetaDakwah.find({
         waktuMulai: { $gte: startDateObj, $lte: endDateObj },
-      });
+      }).populate("masjidId");
   
       res.status(200).json({
         message: "PetaDakwah data filtered successfully",
@@ -207,8 +207,12 @@ const petaDakwahController = {
         return res.status(400).json({ message: "Not a valid kategori" });
       }
 
+      // populate({
+      //   path: "masjidId",
+      //   select: "lokasiMasjid",});
+
       // Perform the query to filter PetaDakwah data based on the kategori
-      const petaDakwahData = await PetaDakwah.find({ kategori });
+      const petaDakwahData = await PetaDakwah.find({ kategori }).populate("masjidId");
 
       res.status(200).json({
         message: "PetaDakwah data filtered by kategori successfully",
