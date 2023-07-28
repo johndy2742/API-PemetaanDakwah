@@ -185,7 +185,7 @@ const petaDakwahController = {
   
       res.status(200).json({
         message: "PetaDakwah data filtered successfully",
-        petaDakwah: petaDakwahData,
+        petaDakwahs: petaDakwahData,
       });
     } catch (error) {
       console.error(error);
@@ -217,7 +217,7 @@ const petaDakwahController = {
 
       res.status(200).json({
         message: "PetaDakwah data filtered by kategori successfully",
-        petaDakwah: petaDakwahData,
+        petaDakwahs: petaDakwahData,
       });
     } catch (error) {
       console.error(error);

@@ -33,12 +33,14 @@ const masjidController = {
       if (!masjid) {
         return res.status(404).json({ message: "Masjid not found." });
       }
-      res.status(200).json(masjid);
+      res.status(200).json({
+        message: "Masjid fetched successfully",
+        masjids: masjid, // Use 'masjid' instead of 'masjids'
+      });
     } catch (error) {
       res.status(500).json({ error: "Failed to get Masjid." });
     }
   },
-
   // Update a Masjid by ID
   async update(req, res) {
     try {
@@ -69,10 +71,14 @@ const masjidController = {
 
   async count(req, res) {
     try {
-      const masjidCount = await Masjid.countDocuments();
-      res.status(200).json({ count: masjidCount });
+      const count = await Masjid.countDocuments();
+      res.status(200).json({
+        message: "Number of Masjids fetched successfully",
+        count: count,
+      });
     } catch (error) {
-      res.status(500).json({ error: "Failed to count Masjids." });
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
     }
   },
 };

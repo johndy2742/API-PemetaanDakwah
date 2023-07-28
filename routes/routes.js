@@ -43,7 +43,7 @@ router.get("/api/masjid", passport.authenticate("jwt", { session: false }), masj
 router.get("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.getById);
 router.put("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.update);
 router.delete("/api/masjid/:id", passport.authenticate("jwt", { session: false }), masjidController.delete);
-router.get("/api/masjid/count", passport.authenticate("jwt", { session: false }), masjidController.count);
+router.get("/api/graph/masjid", passport.authenticate("jwt", { session: false }), masjidController.count);
 
 //Non Token Get
 router.get("/api/admin/user",userController.getAll)
