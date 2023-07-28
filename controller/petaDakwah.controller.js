@@ -62,7 +62,7 @@ const petaDakwahController = {
       const petaDakwahs = await PetaDakwah.find().populate("masjidId");
       res.status(200).json({
         message: "PetaDakwahs fetched successfully",
-        petadakwahs: petaDakwahs,
+        petaDakwahs: petaDakwahs,
       });
     } catch (error) {
       console.error(error);

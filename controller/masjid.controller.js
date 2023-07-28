@@ -66,6 +66,15 @@ const masjidController = {
       res.status(500).json({ error: "Failed to delete Masjid." });
     }
   },
+
+  async count(req, res) {
+    try {
+      const masjidCount = await Masjid.countDocuments();
+      res.status(200).json({ count: masjidCount });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to count Masjids." });
+    }
+  },
 };
 
 module.exports = masjidController;
