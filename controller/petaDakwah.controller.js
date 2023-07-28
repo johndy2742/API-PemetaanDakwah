@@ -90,6 +90,7 @@ const petaDakwahController = {
   // Update a specific PetaDakwah document by ID
   update: async (req, res) => {
     const {
+      masjidId,
       lat,
       lng,
       pembicara,
@@ -111,6 +112,7 @@ const petaDakwahController = {
       const petaDakwah = await PetaDakwah.findByIdAndUpdate(
         req.params.id,
         {
+          masjidId,
           lat,
           lng,
           pembicara,
