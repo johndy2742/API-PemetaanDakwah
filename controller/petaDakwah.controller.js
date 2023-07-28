@@ -1,4 +1,5 @@
 const PetaDakwah = require('../models/PetaDakwah');
+const Masjid = require('../models/masjid');
 
 const petaDakwahController = {
   // Create a new PetaDakwah document
@@ -224,29 +225,30 @@ const petaDakwahController = {
     }
   },
 
-  getPetaDakwahByMasjid: async (req, res) => {
+  getPetaDakwahByMasjid : async (req, res) => {
     try {
       const { id } = req.query;
-
       if (!id) {
         return res.status(400).json({ message: "Masjid ID is required" });
       }
+  
+      const petaDakwah = await PetaDakwah.find({ masjidId: id }).populate("masjidId");
 
-      const petaDakwahData = await PetaDakwah.find({ _id: id });
-
-      if (petaDakwahData.length === 0) {
+  
+      if (petaDakwah.length === 0) {
         return res.status(404).json({ message: "No PetaDakwah data found for the specified masjid ID" });
       }
-
+  
       res.status(200).json({
         message: "PetaDakwah data fetched successfully by masjid ID",
-        petaDakwah: petaDakwahData,
+        petaDakwahs: petaDakwah,
       });
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Failed to fetch PetaDakwah data by masjid ID" });
     }
   },
+  
   getAllWithoutMasjid: async (req, res) => {
     try {
       // Your logic to retrieve all PetaDakwah without a masjid association here
