@@ -32,6 +32,7 @@ router.get("/api/rumah/:id",  rumahController.getById)
 router.put("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.update)
 router.delete("/api/rumah/:id", passport.authenticate("jwt", { session: false }), rumahController.delete)
 router.get("/api/graph/rumah",  rumahController.count)
+router.get("/api/graph/rumahstats",  rumahController.countKurbanZakatHaji)
     
 // petaDakwah route
 router.post("/api/petaDakwah/create", passport.authenticate("jwt", { session: false }), petaDakwahController.create);

@@ -267,6 +267,19 @@ const rumahController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+
+  countKurbanZakatHaji : async (req, res) => {
+    try {
+      const kurbanCount = await Rumah.countDocuments({ kurban: true });
+      const zakatCount = await Rumah.countDocuments({ kondisiZakat: true });
+      const hajiCount = await Rumah.countDocuments({ informasiHaji: true });
+  
+      res.json({ kurban: kurbanCount, zakat: zakatCount, haji: hajiCount });
+    } catch (error) {
+      console.error('Error counting kurban, zakat, and haji:', error);
+      res.status(500).json({ message: 'Error counting kurban, zakat, and haji.' });
+    }
+  }
 };  
 
 module.exports = rumahController;
