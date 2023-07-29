@@ -273,8 +273,14 @@ const rumahController = {
       const kurbanCount = await Rumah.countDocuments({ kurban: true });
       const zakatCount = await Rumah.countDocuments({ kondisiZakat: true });
       const hajiCount = await Rumah.countDocuments({ informasiHaji: true });
+      const totalRumahCount = await Rumah.countDocuments();
   
-      res.json({ kurban: kurbanCount, zakat: zakatCount, haji: hajiCount });
+      res.json({
+        kurban: kurbanCount,
+        zakat: zakatCount,
+        haji: hajiCount,
+        JumlahRumah: totalRumahCount, // Change the field name here
+      });
     } catch (error) {
       console.error('Error counting kurban, zakat, and haji:', error);
       res.status(500).json({ message: 'Error counting kurban, zakat, and haji.' });
