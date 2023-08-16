@@ -13,13 +13,37 @@ const masjidController = {
   },
 
   // Get all Masjids
-  getAll: async (req, res) => {
+  async getAll(req, res) {
     try {
-      const masjids = await Masjid.find();
-      res.status(200).json({
-        message: "Masjids fetched successfully",
-        masjids: masjids,
-      });
+      const { startDate, endDate } = req.query;
+
+      if (startDate && endDate) {
+        // If startDate and endDate query parameters are provided,
+        // filter masjids based on createdAt range
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+
+        if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+          return res.status(400).json({ message: "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)" });
+        }
+
+        const masjids = await Masjid.find({
+          createdAt: { $gte: startDateObj, $lte: endDateObj }
+        });
+
+        return res.status(200).json({
+          message: "Masjids fetched successfully based on createdAt range",
+          masjids: masjids,
+        });
+      } else {
+        // If no startDate and endDate query parameters are provided,
+        // fetch all masjids
+        const masjids = await Masjid.find();
+        return res.status(200).json({
+          message: "Masjids fetched successfully",
+          masjids: masjids,
+        });
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
