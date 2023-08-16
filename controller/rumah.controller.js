@@ -30,66 +30,37 @@ const rumahController = {
     }
   },
 
+
+  
   getAll: async (req, res) => {
     try {
       const keluargas = await Keluarga.find().populate("rumah");
   
-      const modifiedKeluargas = keluargas.map((keluarga) => {
-        const rumah = keluarga.rumah;
+      const modifiedKeluargas = keluargas.map((keluarga) => ({
+        fotoRumah: keluarga.fotoRumah,
+        rumahId: keluarga.rumah._id,
+        keluargaId: keluarga._id,
+        kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
+        keaktifanShalat: keluarga.rumah.keaktifanShalat,
+        informasiHaji: keluarga.rumah.informasiHaji,
+        kondisiZakat: keluarga.rumah.kondisiZakat,
+        kemampuanBacaQuran: keluarga.rumah.kemampuanBacaQuran,
+        kurban: keluarga.rumah.kurban,
+        lat: keluarga.rumah.lat,
+        lng: keluarga.rumah.lng,
+        alamat : keluarga.rumah.alamat,
+        createdAt : keluarga.rumah.createdAt
+      }));
   
-        return {
-          kepalaKeluarga: keluarga.kepalaKeluarga || null,
-          RumahId: rumah ? rumah._id : null,
-          keaktifanShalat: rumah ? rumah.keaktifanShalat : null,
-          informasiHaji: rumah ? rumah.informasiHaji : null,
-          kondisiZakat: rumah ? rumah.kondisiZakat : null,
-          kemampuanBacaQuran: rumah ? rumah.kemampuanBacaQuran : null,
-          kurban: rumah ? rumah.kurban : null,
-          lat: rumah ? rumah.lat : null,
-          lng: rumah ? rumah.lng : null,
-          alamat: rumah ? rumah.alamat : null,
-          createdAt: rumah ? rumah.createdAt : null,
-        };
+      res.status(200).json({
+        message: "Keluargas fetched successfully",
+        keluargas: modifiedKeluargas,
       });
-  
-      // Apply additional filters here
-      const { startDate, endDate } = req.query;
-  
-      if (startDate && endDate) {
-        const startDateObj = new Date(startDate);
-        const endDateObj = new Date(endDate);
-  
-        if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
-          return res.status(400).json({
-            message:
-              "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)",
-          });
-        }
-  
-        const filteredKeluargas = modifiedKeluargas.filter((keluarga) => {
-          const createdAtDate = new Date(keluarga.createdAt);
-          return (
-            createdAtDate >= startDateObj && createdAtDate <= endDateObj
-          );
-        });
-  
-        res.status(200).json({
-          message: "Keluargas fetched successfully",
-          keluargas: filteredKeluargas,
-        });
-      } else {
-        res.status(200).json({
-          message: "Keluargas fetched successfully",
-          keluargas: modifiedKeluargas,
-        });
-      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
-  },
-  
-  
+  },  
   
   
   
