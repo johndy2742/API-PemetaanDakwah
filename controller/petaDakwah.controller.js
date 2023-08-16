@@ -21,6 +21,7 @@ const petaDakwahController = {
       alamat_penyelenggara,
       penanggung_jawab,
       no_hp_penyelenggara,
+      createdAt,
     } = req.body;
 
     try {
@@ -42,6 +43,7 @@ const petaDakwahController = {
         alamat_penyelenggara,
         penanggung_jawab,
         no_hp_penyelenggara,
+        createdAt,
       });
 
       const newPetaDakwah = await petaDakwah.save();
@@ -59,7 +61,17 @@ const petaDakwahController = {
   // Get all PetaDakwah documents
   getAll: async (req, res) => {
     try {
-      const petaDakwahs = await PetaDakwah.find().populate("masjidId");
+      const { startDate, endDate } = req.query;
+  
+      let query = {};
+      if (startDate && endDate) {
+        query.createdAt = {
+          $gte: new Date(startDate),
+          $lte: new Date(endDate)
+        };
+      }
+  
+      const petaDakwahs = await PetaDakwah.find(query).populate("masjidId");
       res.status(200).json({
         message: "PetaDakwahs fetched successfully",
         petaDakwahs: petaDakwahs,
@@ -69,6 +81,7 @@ const petaDakwahController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+  
 
   // Get a specific PetaDakwah document by ID
   getById: async (req, res) => {

@@ -68,6 +68,10 @@ const petaDakwahSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  }
 });
 
 const PetaDakwah = mongoose.model("PetaDakwah", petaDakwahSchema);
