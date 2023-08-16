@@ -38,7 +38,7 @@ const rumahController = {
         const rumah = keluarga.rumah;
   
         return {
-          kepalaKeluarga: keluarga.kepalaKeluarga ? keluarga.kepalaKeluarga : null,
+          kepalaKeluarga: keluarga.kepalaKeluarga || null,
           RumahId: rumah ? rumah._id : null,
           keaktifanShalat: rumah ? rumah.keaktifanShalat : null,
           informasiHaji: rumah ? rumah.informasiHaji : null,
@@ -60,12 +60,17 @@ const rumahController = {
         const endDateObj = new Date(endDate);
   
         if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
-          return res.status(400).json({ message: "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)" });
+          return res.status(400).json({
+            message:
+              "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)",
+          });
         }
   
         const filteredKeluargas = modifiedKeluargas.filter((keluarga) => {
           const createdAtDate = new Date(keluarga.createdAt);
-          return createdAtDate >= startDateObj && createdAtDate <= endDateObj;
+          return (
+            createdAtDate >= startDateObj && createdAtDate <= endDateObj
+          );
         });
   
         res.status(200).json({
@@ -83,6 +88,7 @@ const rumahController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+  
   
   
   
