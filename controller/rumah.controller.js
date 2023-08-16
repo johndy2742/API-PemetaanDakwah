@@ -48,19 +48,47 @@ const rumahController = {
         kurban: keluarga.rumah.kurban,
         lat: keluarga.rumah.lat,
         lng: keluarga.rumah.lng,
-        alamat : keluarga.rumah.alamat,
-        createdAt : keluarga.rumah.createdAt
+        alamat: keluarga.rumah.alamat,
+        createdAt: keluarga.rumah.createdAt
       }));
   
-      res.status(200).json({
-        message: "Keluargas fetched successfully",
-        keluargas: modifiedKeluargas,
-      });
+      // Apply additional filters here
+      const { startDate, endDate } = req.query;
+  
+      if (startDate && endDate) {
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+  
+        if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+          return res.status(400).json({
+            message:
+              "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)",
+          });
+        }
+  
+        const filteredKeluargas = modifiedKeluargas.filter((keluarga) => {
+          const createdAtDate = new Date(keluarga.createdAt);
+          return (
+            createdAtDate >= startDateObj && createdAtDate <= endDateObj
+          );
+        });
+  
+        res.status(200).json({
+          message: "Keluargas fetched successfully",
+          keluargas: filteredKeluargas,
+        });
+      } else {
+        res.status(200).json({
+          message: "Keluargas fetched successfully",
+          keluargas: modifiedKeluargas,
+        });
+      }
     } catch (error) {
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
-  },  
+  },
+  
   
   
   
