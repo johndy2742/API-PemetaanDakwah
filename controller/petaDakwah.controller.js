@@ -278,9 +278,30 @@ const petaDakwahController = {
       res.status(500).json({ message: "Failed to fetch PetaDakwah data without masjid association" });
     }
   },
-  count: async (req, res) => {
+  
+  async count(req, res) {
     try {
-      const count = await PetaDakwah.countDocuments();
+      const { startDate, endDate } = req.query;
+      let query = {};
+  
+      if (startDate && endDate) {
+        const startDateObj = new Date(startDate);
+        const endDateObj = new Date(endDate);
+  
+        if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+          return res.status(400).json({
+            message: "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)",
+          });
+        }
+  
+        query.createdAt = {
+          $gte: startDateObj,
+          $lte: endDateObj,
+        };
+      }
+  
+      const count = await PetaDakwah.countDocuments(query);
+  
       res.status(200).json({
         message: "Number of Dakwah fetched successfully",
         count: count,
@@ -290,6 +311,7 @@ const petaDakwahController = {
       res.status(500).json({ message: "Internal server error" });
     }
   },
+  
 
   countbymonth: async (req, res) => {
     try {

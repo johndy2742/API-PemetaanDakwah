@@ -290,17 +290,35 @@ const rumahController = {
     }
   },
   count: async (req, res) => {
-    try {
-      const count = await Rumah.countDocuments();
-      res.status(200).json({
-        message: "Number of Rumahs fetched successfully",
-        count: count,
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: "Internal server error" });
+  try {
+    const { startDate, endDate } = req.query;
+    let query = {};
+
+    if (startDate && endDate) {
+      const startDateObj = new Date(startDate);
+      const endDateObj = new Date(endDate);
+
+      if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime())) {
+        return res.status(400).json({ message: "Invalid date format. Please use ISO 8601 format (YYYY-MM-DDTHH:mm:ss.sssZ)" });
+      }
+
+      query["createdAt"] = {
+        $gte: startDateObj,
+        $lte: endDateObj
+      };
     }
-  },
+
+    const count = await Rumah.countDocuments(query);
+
+    res.status(200).json({
+      message: "Number of Rumahs fetched successfully",
+      count: count,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+},
 
   countKurbanZakatHaji : async (req, res) => {
     try {
